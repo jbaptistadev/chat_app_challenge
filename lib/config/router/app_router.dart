@@ -45,7 +45,9 @@ final goRouterProvider = Provider((ref) {
       GoRoute(
         path: '/chat/:profileId',
         builder: (context, state) {
-          return ChatScreen(profileId: state.pathParameters['profileId']!);
+          return ChatScreen(
+            profileId: state.pathParameters['profileId'] ?? 'no-id',
+          );
         },
       ),
     ],

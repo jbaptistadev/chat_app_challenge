@@ -1,3 +1,5 @@
+import 'package:epale_app/features/chat/presentation/providers/message_provider.dart';
+import 'package:epale_app/features/chat/presentation/providers/messages_provider.dart';
 import 'package:epale_app/features/chat/presentation/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,39 +24,58 @@ class _Chat extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileState = ref.watch(profileProvider(profileId));
+    final messagesState = ref.watch(messagesProvider(profileId));
 
     return Scaffold(
-      appBar:
-          profileState.isLoading
-              ? null
-              : AppBar(
-                centerTitle: false,
-                title: Text(profileState.profile?.username ?? 'Username'),
-                leading: IconButton(
-                  onPressed: () {
-                    context.pop();
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-              ),
+      appBar: AppBar(
+        centerTitle: false,
+        title:
+            profileState.isLoading
+                ? null
+                : Text(profileState.profile?.username ?? 'Username'),
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Column(
         children: [
-          Flexible(child: Column(children: [const Text('Chat')])),
+          Flexible(
+            child:
+                messagesState.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                      itemCount: messagesState.messages.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(messagesState.messages[index].content),
+                        );
+                      },
+                    ),
+          ),
           const Divider(height: 1),
-          Container(color: Colors.grey[200], child: _ChatBox()),
+          Container(
+            color: Colors.grey[200],
+            child: _ChatBox(profileId: profileId),
+          ),
         ],
       ),
     );
   }
 }
 
-class _ChatBox extends StatelessWidget {
-  _ChatBox();
+class _ChatBox extends ConsumerWidget {
+  final String profileId;
+
+  _ChatBox({required this.profileId});
 
   final focusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sendMessage = ref.read(messageProvider.notifier).sendMessage;
     return SafeArea(
       child: Container(
         height: 50,
@@ -63,6 +84,9 @@ class _ChatBox extends StatelessWidget {
           children: [
             Flexible(
               child: TextField(
+                onChanged: (value) {
+                  ref.read(messageProvider.notifier).setMessage(value);
+                },
                 decoration: const InputDecoration.collapsed(
                   hintText: 'Send message',
                 ),
@@ -70,7 +94,12 @@ class _ChatBox extends StatelessWidget {
               ),
             ),
 
-            ElevatedButton(onPressed: () {}, child: const Text('Send')),
+            ElevatedButton(
+              onPressed: () {
+                sendMessage(profileId);
+              },
+              child: const Text('Send'),
+            ),
           ],
         ),
       ),
