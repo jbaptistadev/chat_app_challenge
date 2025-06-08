@@ -33,8 +33,10 @@ flutter pub get
 
 the app uses supabase for the backend, you need to create a supabase project and add the following environment variables to your .env file:
 
+```
 SUPABASE_URL=supabase_url
 SUPABASE_ANON_KEY=supabase_anon_key
+```
 
 you have an example of the .env file in the .env-template file.
 
