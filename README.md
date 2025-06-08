@@ -29,7 +29,16 @@ Once inside the project directory, install all required dependencies:
 
 flutter pub get
 
-## 3. Running the Application
+## 3. Configuration
+
+the app uses supabase for the backend, you need to create a supabase project and add the following environment variables to your .env file:
+
+SUPABASE_URL=supabase_url
+SUPABASE_ANON_KEY=supabase_anon_key
+
+you have an example of the .env file in the .env-template file.
+
+## 4. Running the Application
 
 After successful installation, you can launch the application:
 
@@ -41,7 +50,7 @@ Access the application:
 
 Open the application on your device or emulator.
 
-## 4. User Registration
+## 5. User Registration
 
 To use the chat features, you first need to register an account:
 
@@ -59,7 +68,7 @@ A strong Password
 
 When you click on the register button, you will be prompted to confirm your email address in your email inbox
 
-## 5. Using the Chat App
+## 6. Using the Chat App
 
 Once you've registered and logged in, you can start using the chat features:
 
