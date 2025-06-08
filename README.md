@@ -18,7 +18,9 @@ Follow these steps to get the project installed on your local machine:
 Clone the repository:
 Open your terminal or command prompt and run the following command:
 
+```
 git clone https://github.com/jbaptistadev/chat_app_challenge.git
+```
 
 Navigate into the project directory:
 
@@ -27,7 +29,9 @@ cd chat_app_challenge
 Install dependencies:
 Once inside the project directory, install all required dependencies:
 
+```
 flutter pub get
+```
 
 ## 3. Configuration
 
@@ -46,7 +50,13 @@ After successful installation, you can launch the application:
 
 Start the application:
 
-flutter run or flutter run -d <device_id>
+```
+flutter run
+
+or
+
+flutter run -d <device_id>
+```
 
 Access the application:
 
