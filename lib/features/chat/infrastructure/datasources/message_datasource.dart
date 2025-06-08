@@ -28,14 +28,18 @@ class MessageDataSourceImpl implements MessageDataSource {
           .order('created_at', ascending: true)
           .limit(100);
 
-      return [...userMessages, ...profileMessages]
-          .map(
-            (message) => MessageMapper.remoteMessageToMessage(
-              map: message,
-              userId: userId,
-            ),
-          )
-          .toList();
+      final allMessages =
+          [...userMessages, ...profileMessages]
+              .map(
+                (message) => MessageMapper.remoteMessageToMessage(
+                  map: message,
+                  userId: userId,
+                ),
+              )
+              .toList();
+
+      allMessages.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      return allMessages;
     } catch (e) {
       throw CustomError('Unable to get messages.');
     }

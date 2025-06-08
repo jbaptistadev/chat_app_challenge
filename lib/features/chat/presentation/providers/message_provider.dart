@@ -32,7 +32,10 @@ class MessageNotifier extends StateNotifier<MessageState> {
         userId,
         state.message.value,
       );
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(
+        isLoading: false,
+        message: const MessageText.pure(),
+      );
     } catch (e) {
       state = state.copyWith(isLoading: false);
       throw CustomError('Unable to send message.');
