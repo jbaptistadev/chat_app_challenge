@@ -65,7 +65,7 @@ class _SignUpForm extends ConsumerWidget {
                   Input(
                     keyboardType: TextInputType.visiblePassword,
                     hintText: 'Password',
-                    obscureText: true,
+                    isObscureText: true,
                     errorMessage:
                         signUpForm.isFormPosted
                             ? signUpForm.password.errorMessage

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Input extends StatefulWidget {
   final String hintText;
   final String? errorMessage;
-  final bool obscureText;
+  final bool isObscureText;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
 
@@ -11,7 +11,7 @@ class Input extends StatefulWidget {
     super.key,
     required this.hintText,
     this.errorMessage,
-    this.obscureText = false,
+    this.isObscureText = false,
     this.keyboardType = TextInputType.text,
     this.onChanged,
   });
@@ -22,6 +22,7 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   late FocusNode _focusNode;
   late final TextEditingController _controller;
+  bool _obscureText = false;
 
   _onFocusChange() {
     setState(() {});
@@ -33,6 +34,7 @@ class _InputState extends State<Input> {
     _controller = TextEditingController();
     _focusNode = FocusNode();
     _focusNode.addListener(_onFocusChange);
+    _obscureText = widget.isObscureText;
   }
 
   @override
@@ -45,21 +47,20 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    bool obscureText = widget.obscureText;
     final inputDecoration = InputDecoration(
       hintText: widget.hintText,
       errorText: widget.errorMessage,
 
       suffixIcon:
-          obscureText
+          widget.isObscureText
               ? IconButton(
                 onPressed: () {
                   setState(() {
-                    obscureText = !obscureText;
+                    _obscureText = !_obscureText;
                   });
                 },
                 icon: Icon(
-                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
                 ),
               )
               : null,
@@ -69,7 +70,7 @@ class _InputState extends State<Input> {
       keyboardType: widget.keyboardType,
       controller: _controller,
       focusNode: _focusNode,
-      obscureText: obscureText,
+      obscureText: _obscureText,
       decoration: inputDecoration,
       onChanged: widget.onChanged,
     );

@@ -38,9 +38,7 @@ class AuthDatasourceImpl implements AuthDatasource {
       final response = await supabase.auth.signUp(
         email: email,
         password: password,
-        data: {
-          'user_metadata': {'username': username},
-        },
+        data: {'username': username},
       );
       final user = response.user;
       if (user == null) {

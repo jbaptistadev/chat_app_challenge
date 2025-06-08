@@ -7,7 +7,7 @@ class UserMapper {
     return UserEntity(
       uid: json['id'] ?? '',
       email: json['email'] ?? '',
-      username: userMetadata['user_metadata']['username'] ?? '',
+      username: userMetadata['username'] ?? '',
     );
   }
 }

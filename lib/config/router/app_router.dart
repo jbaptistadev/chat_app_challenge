@@ -1,5 +1,6 @@
 import 'package:epale_app/config/router/app_router_notifier.dart';
 import 'package:epale_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:epale_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:epale_app/features/auth/presentation/screens/sign_in_screen.dart';
@@ -38,6 +39,13 @@ final goRouterProvider = Provider((ref) {
         path: '/',
         builder: (context, state) {
           return const ChatListScreen();
+        },
+      ),
+
+      GoRoute(
+        path: '/chat/:profileId',
+        builder: (context, state) {
+          return ChatScreen(profileId: state.pathParameters['profileId']!);
         },
       ),
     ],
